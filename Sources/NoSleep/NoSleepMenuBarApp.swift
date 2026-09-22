@@ -46,11 +46,21 @@ struct WelcomeView: View {
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private static let welcomeKey = "NoSleepWelcomeShown"
     private var welcomePanel: NSPanel?
+    private var controlPanel: NSPanel?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         NSLog("NoSleep launched")
         showWelcomePanelIfNeeded()
+    }
+
+    /// Because NoSleep is a menu-bar-only (LSUIElement) app, opening it again
+    /// from Finder while it is already running does not produce a visible window.
+    /// Handle the relaunch by showing a control window so the app is reachable
+    /// even when the menu-bar icon is hidden behind other icons.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        showControlPanel()
+        return true
     }
 
     func applicationWillTerminate(_ notification: Notification) {
@@ -83,5 +93,29 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.welcomePanel?.close()
             self?.welcomePanel = nil
         }
+    }
+
+    private func showControlPanel() {
+        NSApp.activate(ignoringOtherApps: true)
+
+        if controlPanel == nil {
+            let panel = NSPanel(
+                contentRect: NSRect(x: 0, y: 0, width: 260, height: 380),
+                styleMask: [.titled, .closable, .fullSizeContentView],
+                backing: .buffered,
+                defer: false
+            )
+            panel.title = "NoSleep"
+            panel.contentView = NSHostingView(
+                rootView: ContentView()
+                    .frame(width: 240)
+                    .environmentObject(SleepManager.shared)
+            )
+            panel.isReleasedWhenClosed = false
+            controlPanel = panel
+        }
+
+        controlPanel?.center()
+        controlPanel?.makeKeyAndOrderFront(nil)
     }
 }

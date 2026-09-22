@@ -36,6 +36,14 @@ cp -R .build/NoSleep.app ~/Applications/
 
 On first launch you may need to open it via **System Settings → Privacy & Security → Open Anyway** because it is not signed with an Apple Developer ID.
 
+## Tips
+
+### If the menu bar is too crowded
+
+If the coffee-cup icon is hidden by other icons, double-click **NoSleep.app** in Finder while it is already running. It will open a control window so you can still reach the buttons.
+
+For a cleaner menu bar, use a free menu-bar manager such as **[Ice](https://github.com/jordanbaird/Ice)** (open source) or **Hidden Bar** (free on the Mac App Store). They let you hide less important icons while keeping NoSleep visible.
+
 ## How it works
 
 NoSleep uses macOS's own `/usr/bin/pmset` command to temporarily disable system sleep and display sleep. Because changing those settings requires administrator privileges, a small helper executable (`NoSleepHelper`) is bundled inside the app and launched with root privileges through the standard macOS authentication dialog. The helper restores your original power settings when the timer expires, when you stop the app, or when the app quits.
