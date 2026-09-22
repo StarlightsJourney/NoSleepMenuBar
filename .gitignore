@@ -5,6 +5,10 @@
 # Generated app bundle
 NoSleep.app/
 
+# Generated app icon
+AppIcon.icns
+AppIcon.iconset/
+
 # macOS
 .DS_Store
 *.xcuserstate

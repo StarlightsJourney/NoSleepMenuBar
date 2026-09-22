@@ -9,6 +9,9 @@ BUNDLE_ID="${BUNDLE_ID:-com.example.NoSleep}"
 
 swift build -c release
 
+# Generate the app icon from the coffee-cup SF Symbol.
+swift scripts/generate-icon.swift
+
 APP_NAME="NoSleep.app"
 BUILD_DIR=".build/release"
 HELPER_NAME="NoSleepHelper"
@@ -22,6 +25,7 @@ mkdir -p "./$HELPER_DIR"
 cp "$BUILD_DIR/NoSleep" "./$APP_NAME/Contents/MacOS/NoSleep"
 cp "$BUILD_DIR/$HELPER_NAME" "./$HELPER_DIR/$HELPER_NAME"
 chmod +x "./$HELPER_DIR/$HELPER_NAME"
+cp "AppIcon.icns" "./$APP_NAME/Contents/Resources/AppIcon.icns"
 
 cat > "./$APP_NAME/Contents/Info.plist" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -30,6 +34,8 @@ cat > "./$APP_NAME/Contents/Info.plist" <<EOF
 <dict>
     <key>CFBundleExecutable</key>
     <string>NoSleep</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>CFBundleIdentifier</key>
     <string>$BUNDLE_ID</string>
     <key>CFBundleName</key>
