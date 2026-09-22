@@ -1,0 +1,12 @@
+# SwiftPM
+.build/
+.swiftpm/
+
+# Generated app bundle
+NoSleep.app/
+
+# macOS
+.DS_Store
+*.xcuserstate
+*.xcodeproj/
+*.xcworkspace/
