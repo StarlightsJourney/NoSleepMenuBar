@@ -12,7 +12,7 @@ swift build -c release
 # Generate the app icon from the coffee-cup SF Symbol.
 swift scripts/generate-icon.swift
 
-APP_NAME="NoSleep.app"
+APP_NAME=".build/NoSleep.app"
 BUILD_DIR=".build/release"
 HELPER_NAME="NoSleepHelper"
 HELPER_DIR="$APP_NAME/Contents/Helpers"

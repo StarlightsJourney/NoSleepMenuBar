@@ -26,12 +26,12 @@ My MacBook's lid sensor is broken, so macOS no longer detects when the lid is cl
 ./build.sh
 ```
 
-The script builds the Swift package, bundles the executable into `NoSleep.app`, and ad-hoc signs it.
+The script builds the Swift package, bundles the executable into `.build/NoSleep.app`, and ad-hoc signs it.
 
 Copy the app to your Applications folder:
 
 ```bash
-cp -R NoSleep.app ~/Applications/
+cp -R .build/NoSleep.app ~/Applications/
 ```
 
 On first launch you may need to open it via **System Settings → Privacy & Security → Open Anyway** because it is not signed with an Apple Developer ID.
