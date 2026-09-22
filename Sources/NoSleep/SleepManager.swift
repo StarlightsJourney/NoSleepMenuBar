@@ -46,7 +46,7 @@ final class SleepManager: ObservableObject {
                         }
                     }
                 } else {
-                    self.lastError = "Could not start helper. Check Console for 'NoSleep:' logs."
+                    self.lastError = "NoSleep needs your permission to change sleep settings. If no macOS password prompt appeared, try clicking Prevent sleep now again."
                     self.helperStdin = nil
                     self.originalSettings = nil
                 }
@@ -86,8 +86,19 @@ final class SleepManager: ObservableObject {
     }
 
     private func launchHelper(duration: TimeInterval?) -> Bool {
+        // AuthorizationExecuteWithPrivileges needs the app to be a regular,
+        // foreground application for the system password prompt to appear.
+        // Temporarily switch away from the menu-bar-only policy and restore it
+        // after the helper is launched.
+        let previousPolicy = NSApp.activationPolicy()
         DispatchQueue.main.sync {
+            NSApp.setActivationPolicy(.regular)
             NSApp.activate(ignoringOtherApps: true)
+        }
+        defer {
+            _ = DispatchQueue.main.sync {
+                NSApp.setActivationPolicy(previousPolicy)
+            }
         }
 
         guard let helperPath = helperExecutablePath() else {
