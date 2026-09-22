@@ -9,6 +9,11 @@ A tiny, free macOS menu-bar utility that keeps your Mac awake with one click.
 - Supports closed-lid operation as far as macOS allows.
 - Offers preset durations: 5 / 15 / 30 / 60 minutes, or indefinitely.
 - Stops automatically when the timer ends, when you click Stop, or when you quit the app.
+- The icon turns **yellow** while sleep prevention is active, so you know at a glance that it is running.
+
+## Why I made this
+
+My MacBook's lid sensor is broken, so macOS no longer detects when the lid is closed and the built-in sleep behavior became unreliable. I built NoSleep as a quick, one-click way to keep the Mac awake when I need it and to restore normal sleep settings automatically afterwards.
 
 ## Requirements
 

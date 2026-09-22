@@ -6,12 +6,23 @@ struct NoSleepMenuBarApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
-        MenuBarExtra("NoSleep", systemImage: "cup.and.saucer.fill") {
+        MenuBarExtra {
             ContentView()
                 .frame(width: 240)
                 .environmentObject(SleepManager.shared)
+        } label: {
+            MenuBarIcon()
         }
         .menuBarExtraStyle(.window)
+    }
+}
+
+struct MenuBarIcon: View {
+    @StateObject private var sleepManager = SleepManager.shared
+
+    var body: some View {
+        Image(systemName: sleepManager.isPreventingSleep ? "cup.and.saucer.fill" : "cup.and.saucer")
+            .foregroundStyle(sleepManager.isPreventingSleep ? .yellow : .primary)
     }
 }
 
